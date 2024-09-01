@@ -9,6 +9,8 @@ While you can do a lot with these features, you might want to do something that 
 
 Although ASM is powerful, try not to use it at all. It can be both risky (and produce weird code) and needs a game restart when other people want to install your module. It can also be frustrating and risky for your sanity.
 
+Before trying to learn ASM, please learn the basics of java bytecode. There are many guides for this that you can find online.
+
 ## How it goes
 
 LaunchWrapper is a system that Mojang made to fix code in older versions of Minecraft without changing the game itself. It provides a tweaker system, which can do numerous things. Most importantly it gives tweak authors the ability to transform raw classes (byte arrays).
