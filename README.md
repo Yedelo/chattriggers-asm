@@ -83,4 +83,4 @@ register("attackEntity", () => {
     ChatLib.chat("Total attacks: " + Client.getMinecraft().attacks);	
 })
 ```
-![image](total attacks screenshot.png)
+![image](pictures/totalattacks.png)
