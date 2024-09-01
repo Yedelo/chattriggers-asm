@@ -1,5 +1,6 @@
 # ChatTriggers (2.2) ASM injection
 [Original ASM injection guide](https://github.com/ChatTriggers/ChatTriggers/wiki/ASM-Injection)
+If you are making modules for the new ChatTriggers 3.0.0, see the [Dynamic Mixins guide](https://github.com/ChatTriggers/ctjs/wiki/Dynamic-Mixins)
 
 # Introduction
 
@@ -245,3 +246,14 @@ After the classes you target have loaded, they will be saved in folders in the M
 Method descriptors can sometimes be confusing, but this MCP website has descriptors for all methods.
 
 ![descriptor](pictures/descriptor.png)
+
+## Look at other modules
+
+List of other modules that use ASM:
+- [FirstInTab](https://www.chattriggers.com/modules/v/FirstInTab) by Squagward
+- [ClientChatLib](https://www.chattriggers.com/modules/v/ClientChatLib) by me
+- [ToggleFire](https://github.com/camnwalter/ToggleFire) by camnwalter
+
+## Try to look for alternatives
+
+Using ASM in modding at all, let alone with ChatTriggers modules, is still very risky and difficult. Try to look for alternatives where possible or consider making a Forge mod where you have access to [Mixin](https://github.com/SpongePowered/Mixin), a much more powerful and safe library.
