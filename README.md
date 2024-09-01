@@ -52,7 +52,7 @@ export default ASM => {
 
     const className = "net/minecraft/client/Minecraft";
     const fieldName = "attacks";
-    const fieldDescriptor = "I":
+    const fieldDescriptor = "I";
     const accessType = AccessType.PUBLIC;
 
     const initialValue = 0;
