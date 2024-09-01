@@ -20,7 +20,7 @@ Forge uses a Tweaker to load and also gives this transformation ability to mods 
 
 Normal module code is ran somewhat early when Minecraft starts. However, since we need to transform classes, ASM entry code needs to run earlier. Since we run before any of Minecraft starts we cannot access any of it's code or our module's code directly.
 
-In your module, add an asmEntry as such (replace `asm.js` with whatever file name you need) to your `metadata.json`:
+In your `metadata.json`, add an asmEntry as such (replace `asm.js` with whatever file name you need):
 ```json
     "asmEntry": "asm.js" 
 ```
@@ -89,9 +89,9 @@ register("attackEntity", () => {
 
 ```js
 export default ASM => {
-    const className = "net/minecraft/client/entity/EntityPlayerSP";
-    const methodName = "onCriticalHit";
-    const methodDescriptor = "(Lnet/minecraft/entity/Entity)V";
+    const className = "net/minecraft/client/multiplayer/WorldClient";
+    const methodName = "makeFireworks";
+    const methodDescriptor = "(DDDDDDLnet/minecraft/nbt/NBTTagCompound;)V";
     const injectionPoint = ASM.At(ASM.At.HEAD);
 
     ASM.injectBuilder(
@@ -101,11 +101,26 @@ export default ASM => {
         injectionPoint
     ).
     methodMaps({
-        func_71009_b: "onCriticalHit"
+        func_92088_a: "makeFireworks",
+        makeFireworks: "func_92088_a"
     }).
     instructions($ => {
-
+        addInstructions($);
     }).
     execute();
 }
+
+function addInstructions($) {
+    $.
+    getStatic("java/lang/System", "out", "Ljava/io/PrintStream;").
+    ldc("makeFireworks called!").
+    invokeVirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V");
+}
 ```
+
+There are 2 things here that are noticeably different from building new fields.
+First is the `methodMaps` method. This allows us to specify mappings for methods, both ones that we want to call within the ASM instructions and the method we want to target.
+Second is the `instructions` method. This method takes a callback accepting an instruction builder which we call $ for a short name.
+This guide is not going to cover how JVM bytecode works, but know that the $ takes methods from ASMHelper's [insnList](https://github.com/FalseHonesty/AsmHelper/blob/master/src/main/kotlin/dev/falsehonesty/asmhelper/dsl/instructions/insnList.kt) which has similar names to bytecode instructions. It also uses a Proxy to add a special method: `invokeJS`.
+
+
