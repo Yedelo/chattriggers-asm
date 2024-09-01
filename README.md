@@ -62,9 +62,9 @@ export default ASM => {
         fieldName,
         fieldDescriptor,
         accessType
-    ).
-    initialValue(initialValue).
-    execute();
+    )
+    .initialValue(initialValue)
+    .execute();
 }
 ```
 
@@ -100,22 +100,22 @@ export default ASM => {
         methodName,
         methodDescriptor,
         injectionPoint
-    ).
-    methodMaps({
+    )
+    .methodMaps({
         func_92088_a: "makeFireworks",
         makeFireworks: "func_92088_a"
-    }).
-    instructions($ => {
+    })
+    .instructions($ => {
         addInstructions($);
-    }).
-    execute();
+    })
+    .execute();
 }
 
 function addInstructions($) {
-    $.
-    getStatic("java/lang/System", "out", "Ljava/io/PrintStream;").
-    ldc("Fireworks exploded!").
-    invokeVirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V");
+    $
+    .getStatic("java/lang/System", "out", "Ljava/io/PrintStream;")
+    .ldc("Fireworks exploded!")
+    .invokeVirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 }
 ```
 
@@ -152,10 +152,10 @@ export default () => {
 Now for the ASM:
 ```js
 function addInstructions($) {
-    $.
-    iconst_0().
-    anewarray("java/lang/Object").
-    invokeJS("asmFunction");
+    $
+    .iconst_0()
+    .anewarray("java/lang/Object")
+    .invokeJS("asmFunction");
 }
 ```
 
@@ -168,28 +168,28 @@ Adding parameters:
 
 ```js
 function addInstructions($) {
-    $.
-    array(3, "java/lang/Object", $ => {
-        $.
-        aadd($ => {
-            $.
-            dload(1). // x
-            invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
+    $
+    .array(3, "java/lang/Object", $ => {
+        $
+        .aadd($ => {
+            $
+            .dload(1) // x
+            .invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
         });
-        $.
-        aadd($ => {
-            $.
-            dload(3). // y
-            invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
+        $
+        .aadd($ => {
+            $
+            .dload(3) // y
+            .invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
         });
-        $.
+        $
         aadd($ => {
-            $.
-            dload(5). // z
-            invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
+            $
+            .dload(5) // z
+            .invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
         });
-    }).
-    invokeJS("asmFunction");
+    })
+    .invokeJS("asmFunction");
 }
 ```
 
@@ -217,7 +217,7 @@ export default ASM => {
 }
 ```
 
-`
+```
 [14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: <init>
 [14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: a
 [14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: am
@@ -226,7 +226,7 @@ export default ASM => {
 [14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: ap
 [14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: aq
 [14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: ar
-`
+```
 
 # Tips
 
