@@ -113,7 +113,7 @@ export default ASM => {
 function addInstructions($) {
     $.
     getStatic("java/lang/System", "out", "Ljava/io/PrintStream;").
-    ldc("makeFireworks called!").
+    ldc("Fireworks exploded!").
     invokeVirtual("java/io/PrintStream", "println", "(Ljava/lang/String;)V");
 }
 ```
@@ -123,4 +123,40 @@ First is the `methodMaps` method. This allows us to specify mappings for methods
 Second is the `instructions` method. This method takes a callback accepting an instruction builder which we call $ for a short name.
 This guide is not going to cover how JVM bytecode works, but know that the $ takes methods from ASMHelper's [insnList](https://github.com/FalseHonesty/AsmHelper/blob/master/src/main/kotlin/dev/falsehonesty/asmhelper/dsl/instructions/insnList.kt) which has similar names to bytecode instructions. It also uses a Proxy to add a special method: `invokeJS`.
 
+Now we can see "Fireworks exploded!" in standard output whenever a firework explodes in the world.
+`
+[13:09:56] [Client thread/INFO] [STDOUT]: [net.minecraft.client.multiplayer.WorldClient:func_92088_a:-1]: makeFireworks called!
+`
+
+### Calling module code
+In normal bytecode manipulation you can call your own methods with invoke operations. However, our modules aren't made in Java and aren't loaded normally. ChatTriggers adds an `invokeJS` function to call certain specified functions.
+Before calling invokeJS, you must have an Object array on the stack. All JS methods take an object array as the parameter and return an Object.
+
+Since there is nothing similar to `import` in bytecode, ChatTriggers has to know which methods we want to call.
+
+In your `metadata.json`, add the following entry:
+```json
+    "asmExposedFunctions": {
+        "asmFunction": "asmFunction.js"
+    }
+```
+
+Then, make the file `asmFunction.js`:
+```js
+export default () => {
+    ChatLib.chat("makeFireworks called!");
+}
+```
+Now for the ASM:
+```js
+function addInstructions($) {
+    $.
+    iconst_0().
+    anewarray("java/lang/Object").
+    invokeJS("asmFunction");
+}
+```
+
+Now we have access to the module and ChatTriggers APIs.
+[fireworks](fireworks.png)
 
