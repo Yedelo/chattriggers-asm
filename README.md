@@ -129,6 +129,7 @@ Now we can see "Fireworks exploded!" in standard output whenever a firework expl
 `
 
 ### Calling module code
+
 In normal bytecode manipulation you can call your own methods with invoke operations. However, our modules aren't made in Java and aren't loaded normally. ChatTriggers adds an `invokeJS` function to call certain specified functions.
 Before calling invokeJS, you must have an Object array on the stack. All JS methods take an object array as the parameter and return an Object.
 
@@ -159,6 +160,8 @@ function addInstructions($) {
 
 Now we have access to the module and ChatTriggers APIs.
 [fireworks](pictures/fireworks.png)
+
+Note that you can make multiple exposed functions, although they have to be in different files. These functions can be reloaded but the ASM calling it cannot.
 
 Adding parameters:
 
@@ -191,3 +194,48 @@ function addInstructions($) {
 
 The method `makeFireworks` has a signature of `(DDDDDDLnet/minecraft/nbt/NBTTagCompound)`. We want the first 3 doubles (x, y, z) from the parameters. We don't start at 0 though, because that is the reference to the `this` object (in non-static methods). After each double on the stack seems to be a `double_2nd` value so we go by values of 2.
 [fireworklocation](pictures/fireworklocation.png)
+
+Using invokeJS returns an Object. This is whatever you return in your exposed function, which is `org.mozilla.javascript.Undefined` if you don't return anything. Make sure to cast your Object to another type to properly use return values.
+
+### Class modifications
+
+ASMHelper can be helpful for some things but other times we may want to directly modify the class instead of just fields or methods. Using the `modify` function, we receive a general modification helper object, which is documented [here](https://github.com/FalseHonesty/AsmHelper/blob/master/src/main/kotlin/dev/falsehonesty/asmhelper/dsl/writers/GeneralModificationWriter.kt#L22). Note that modifying the class like this means you are on your own, without invokeJS or mappings.
+```js
+export default ASM => {
+    const className = "net/minecraft/client/Minecraft";
+    
+    ASM.modify(
+        className,
+        modifier => {
+            const methods = modifier.classNode.methods;
+            methods.toArray().forEach(method => {
+                java.lang.System.out.println(`method.name: ${method.name}`);
+            });
+        }
+    );
+}
+```
+
+`
+[14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: <init>
+[14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: a
+[14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: am
+[14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: an
+[14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: ao
+[14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: ap
+[14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: aq
+[14:51:31] [main/INFO] [STDOUT]: [sun.reflect.NativeMethodAccessorImpl:invoke0:-2]: method.name: ar
+`
+
+# Tips
+
+## Export your code
+
+LaunchWrapper provides system properties that we can use to export class files and see our code in effect.
+Add the following to your JVM arguments:
+```
+-Dlegacy.debugClassLoading=true
+-Dlegacy.debugClassLoadingSave=true
+```
+After the classes you target have loaded, they will be saved in folders in the Minecraft directory starting with `CLASSLOADER_TEMP`. These will not save if you have more than 10 of them, so make sure to delete the folders often. 
+[decompiledclass](pictures/decompiledclass.png)
