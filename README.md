@@ -159,7 +159,7 @@ function addInstructions($) {
 ```
 
 Now we have access to the module and ChatTriggers APIs.
-[fireworks](pictures/fireworks.png)
+![fireworks](pictures/fireworks.png)
 
 Note that you can make multiple exposed functions, although they have to be in different files. These functions can be reloaded but the ASM calling it cannot.
 
@@ -193,7 +193,7 @@ function addInstructions($) {
 ```
 
 The method `makeFireworks` has a signature of `(DDDDDDLnet/minecraft/nbt/NBTTagCompound)`. We want the first 3 doubles (x, y, z) from the parameters. We don't start at 0 though, because that is the reference to the `this` object (in non-static methods). After each double on the stack seems to be a `double_2nd` value so we go by values of 2.
-[fireworklocation](pictures/fireworklocation.png)
+![fireworklocation](pictures/fireworklocation.png)
 
 Using invokeJS returns an Object. This is whatever you return in your exposed function, which is `org.mozilla.javascript.Undefined` if you don't return anything. Make sure to cast your Object to another type to properly use return values.
 
@@ -238,4 +238,10 @@ Add the following to your JVM arguments:
 -Dlegacy.debugClassLoadingSave=true
 ```
 After the classes you target have loaded, they will be saved in folders in the Minecraft directory starting with `CLASSLOADER_TEMP`. These will not save if you have more than 10 of them, so make sure to delete the folders often. 
-[decompiledclass](pictures/decompiledclass.png)
+![decompiledclass](pictures/decompiledclass.png)
+
+## Use [mcp.thiakil.com](mcp.thiakil.com) for method descriptors
+
+Method descriptors can sometimes be confusing, but this MCP website has descriptors for all methods.
+
+![descriptor](pictures/descriptor.png)
