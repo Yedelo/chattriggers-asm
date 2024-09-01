@@ -84,3 +84,28 @@ register("attackEntity", () => {
 })
 ```
 ![image](pictures/totalattacks.png)
+
+## Modfying existing methods
+
+```js
+export default ASM => {
+    const className = "net/minecraft/client/entity/EntityPlayerSP";
+    const methodName = "onCriticalHit";
+    const methodDescriptor = "(Lnet/minecraft/entity/Entity)V";
+    const injectionPoint = ASM.At(ASM.At.HEAD);
+
+    ASM.injectBuilder(
+        className,
+        methodName,
+        methodDescriptor,
+        injectionPoint
+    ).
+    methodMaps({
+        func_71009_b: "onCriticalHit"
+    }).
+    instructions($ => {
+
+    }).
+    execute();
+}
+```
