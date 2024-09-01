@@ -158,5 +158,36 @@ function addInstructions($) {
 ```
 
 Now we have access to the module and ChatTriggers APIs.
-[fireworks](fireworks.png)
+[fireworks](pictures/fireworks.png)
 
+Adding parameters:
+
+```js
+function addInstructions($) {
+    $.
+    array(3, "java/lang/Object", $ => {
+        $.
+        aadd($ => {
+            $.
+            dload(1). // x
+            invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
+        });
+        $.
+        aadd($ => {
+            $.
+            dload(3). // y
+            invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
+        });
+        $.
+        aadd($ => {
+            $.
+            dload(5). // z
+            invokeStatic("java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
+        });
+    }).
+    invokeJS("asmFunction");
+}
+```
+
+The method `makeFireworks` has a signature of `(DDDDDDLnet/minecraft/nbt/NBTTagCompound)`. We want the first 3 doubles (x, y, z) from the parameters. We don't start at 0 though, because that is the reference to the `this` object (in non-static methods). After each double on the stack seems to be a `double_2nd` value so we go by values of 2.
+[fireworklocation](pictures/fireworklocation.png)
