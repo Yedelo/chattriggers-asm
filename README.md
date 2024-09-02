@@ -252,9 +252,8 @@ Method descriptors can sometimes be confusing, but this MCP website has descript
 ## Look at other modules
 
 List of other modules that use ASM:
-- [FirstInTab](https://www.chattriggers.com/modules/v/FirstInTab) by Squagward
+- [FirstInTab](https://www.chattriggers.com/modules/v/FirstInTab) and [ToggleFire](https://github.com/camnwalter/ToggleFire) by Squagward
 - [ClientChatLib](https://www.chattriggers.com/modules/v/ClientChatLib) by me
-- [ToggleFire](https://github.com/camnwalter/ToggleFire) by camnwalter
 
 ## Try to look for alternatives
 
