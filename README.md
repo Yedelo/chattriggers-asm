@@ -1,5 +1,6 @@
 # ChatTriggers (2.2) ASM injection
 [Original ASM injection guide](https://github.com/ChatTriggers/ChatTriggers/wiki/ASM-Injection)
+
 If you are making modules for the new ChatTriggers 3.0.0, see the [Dynamic Mixins guide](https://github.com/ChatTriggers/ctjs/wiki/Dynamic-Mixins)
 
 # Introduction
@@ -9,7 +10,7 @@ While you can do a lot with these features, you might want to do something that 
 
 Although ASM is powerful, try not to use it at all. It can be both risky (and produce weird code) and needs a game restart when other people want to install your module. It can also be frustrating and risky for your sanity.
 
-Before trying to learn ASM, please learn the basics of java bytecode. There are many guides for this that you can find online.
+Before trying to learn ASM, please learn the basics of java bytecode. There are many guides for doing so such as `[this](https://dzone.com/articles/introduction-to-java-bytecode).
 
 ## How it goes
 
