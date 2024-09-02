@@ -259,3 +259,6 @@ List of other modules that use ASM:
 ## Try to look for alternatives
 
 Using ASM in modding at all, let alone with ChatTriggers modules, is still very risky and difficult. Try to look for alternatives where possible or consider making a Forge mod where you have access to [Mixin](https://github.com/SpongePowered/Mixin), a much more powerful and safe library.
+
+Also consider looking for Forge hooks. They are not present in the Minecraft source code but you can find them with a development environment in a Forge mod workspace. For example, this item use event would have saved me from using ASM to make an eating event.
+![forgehooks](pictures/forgehooks.png)
