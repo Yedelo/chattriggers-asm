@@ -243,9 +243,10 @@ Add the following to your JVM arguments:
 After the classes you target have loaded, they will be saved in folders in the Minecraft directory starting with `CLASSLOADER_TEMP`. These will not save if you have more than 10 of them, so make sure to delete the folders often. 
 ![decompiledclass](pictures/decompiledclass.png)
 
-## Use [mcp.thiakil.com](mcp.thiakil.com) for method descriptors
+## Use [mcp.thiakil.com](https://mcp.thiakil.com) for method descriptors
 
-Method descriptors can sometimes be confusing, but this MCP website has descriptors for all methods.
+Method descriptors can sometimes be confusing, but this MCP website has descriptors for all Minecraft methods. 
+Note that when you enter the website, you have to select 1.8.9-stable-22 as the mappings settings.
 
 ![descriptor](pictures/descriptor.png)
 
